@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      outline: none;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .login-btn {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .login-btn:hover {
+      background: #2563eb;
+    }
+
+    .error {
+      color: #fca5a5;
+      text-align: center;
+      margin-top: 12px;
+      min-height: 20px;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .options {
+      display: grid;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .option-btn {
+      background: #10b981;
+      color: white;
+      font-size: 18px;
+    }
+
+    .option-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+
+    .logout-btn {
+      margin-top: 20px;
+      background: #ef4444;
+      color: white;
+    }
+
+    .logout-btn:hover {
+      background: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Login Card -->
+    <div class="card" id="loginCard">
+      <h1>Login Dashboard</h1>
+      <p class="subtitle">Enter the correct password to continue</p>
+      <input type="password" id="passwordInput" placeholder="Enter password" />
+      <button class="login-btn" onclick="login()">Login</button>
+      <div class="error" id="errorMessage"></div>
+    </div>
+
+    <!-- Dashboard Card -->
+    <div class="card hidden" id="dashboardCard">
+      <h1>Select Option</h1>
+      <p class="subtitle">Choose what you want to open</p>
+
+      <div class="options">
+        <button class="option-btn" onclick="openPage('FAC')">FAC</button>
+        <button class="option-btn" onclick="openPage('ELC')">ELC</button>
+        <button class="option-btn" onclick="openPage('PAT')">PAT</button>
+      </div>
+
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    // CHANGE THIS PASSWORD
+    const correctPassword = "1234";
+
+    // ADD YOUR WEBSITE LINKS LATER
+    const links = {
+      FAC: "",
+      ELC: "",
+      PAT: "https://vfmteam.github.io/PAT-for-Me/"
+    };
+
+    function login() {
+      const password = document.getElementById("passwordInput").value;
+      const errorMessage = document.getElementById("errorMessage");
+
+      if (password === correctPassword) {
+        document.getElementById("loginCard").classList.add("hidden");
+        document.getElementById("dashboardCard").classList.remove("hidden");
+        errorMessage.textContent = "";
+      } else {
+        errorMessage.textContent = "Wrong password!";
+      }
+    }
+
+    function openPage(option) {
+      const url = links[option];
+
+      if (!url) {
+        alert("Please add the website address for " + option + " first.");
+        return;
+      }
+
+      window.location.href = url;
+    }
+
+    function logout() {
+      document.getElementById("dashboardCard").classList.add("hidden");
+      document.getElementById("loginCard").classList.remove("hidden");
+      document.getElementById("passwordInput").value = "";
+    }
+
+    // Press Enter to login
+    document.getElementById("passwordInput").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        login();
+      }
+    });
+  </script>
+</body>
+</html>
